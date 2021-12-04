@@ -301,8 +301,8 @@ class ActorPPO(nn.Module):
 
         self.net = nn.Sequential(nn_middle,
                                  nn.Linear(mid_dim, mid_dim), nn.Hardswish(),
-                                 nn.Linear(mid_dim, action_dim), )
-        layer_norm(self.net[-1], std=0.1)  # output layer for action
+                                 nn.Linear(mid_dim, action_dim),
+                                 nn.LayerNorm(action_dim))
 
         # the logarithm (log) of standard deviation (std) of action, it is a trainable parameter
         self.a_std_log = nn.Parameter(torch.zeros((1, action_dim)) - 0.5, requires_grad=True)
